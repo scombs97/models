@@ -127,7 +127,7 @@ def _convert_dataset(dataset_split):
         seg_data = tf.gfile.GFile(seg_filename, 'rb').read()
         seg_height, seg_width = label_reader.read_image_dims(seg_data)
         if height != seg_height or width != seg_width:
-          print(f"{seg_filename}: height = {height}, seg_height = {seg_height}, width = {width}, seg_width = {seg_width}")
+          sys.stdout.write(f"{seg_filename}: height = {height}, seg_height = {seg_height}, width = {width}, seg_width = {seg_width}\n")
           raise RuntimeError('Shape mismatched between image and label.')
         # Convert to tf example.
         example = build_data.image_seg_to_tfexample(
