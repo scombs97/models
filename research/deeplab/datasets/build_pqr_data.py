@@ -64,22 +64,22 @@ import tensorflow as tf
 FLAGS = tf.app.flags.FLAGS
 
 tf.app.flags.DEFINE_string('image_folder',
-                           './PQR/JPEGImages',
+                           'PQR/JPEGImages',
                            'Folder containing images.')
 
 tf.app.flags.DEFINE_string(
     'semantic_segmentation_folder',
-    './PQR/SegmentationClassRaw',
+    'PQR/SegmentationClassRaw',
     'Folder containing semantic segmentation annotations.')
 
 tf.app.flags.DEFINE_string(
     'list_folder',
-    './PQR/ImageSets',
+    'PQR/ImageSets',
     'Folder containing lists for training and validation')
 
 tf.app.flags.DEFINE_string(
     'output_dir',
-    './PQR/tfrecord',
+    'PQR/tfrecord',
     'Path to save converted SSTable of TensorFlow examples.')
 
 
