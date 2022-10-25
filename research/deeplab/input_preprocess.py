@@ -106,7 +106,7 @@ def preprocess_image_and_label(image,
   # Pad image and label to have dimensions >= [crop_height, crop_width]
   image_shape = tf.shape(processed_image)
   image_height = image_shape[0]
-  image_width = image_shape[1]
+  image_width = image_shape
 
   target_height = image_height + tf.maximum(crop_height - image_height, 0)
   target_width = image_width + tf.maximum(crop_width - image_width, 0)
@@ -125,6 +125,14 @@ def preprocess_image_and_label(image,
   if is_training and label is not None:
     processed_image, label = preprocess_utils.random_crop(
         [processed_image, label], crop_height, crop_width)
+    #MH
+  else:
+    rr = tf.minimum(tf.cast(crop_height, tf.float32)/tf.cast(image_height, tf.float32),tf.cast(crop_width, tf.float32)/tf.cast(image_width, tf.float32))
+    newh = tf.cast(tf.cast(image_height, tf.float32)*rr, tf.int32)
+    neww = tf.cast((tf.cast(image_width, tf.float32)*rr), tf.int32)
+    processed_image = tf.image.resize_images(processed_image, (newh, neww), method=tf.image.ResizeMethod.BILINEAR, align_corners=True)
+    processed_image = preprocess_utils.pad_to_bounding_box(processed_image, 0, 0, crop_height, crop_width, mean_pixel)
+  #END MH
 
   processed_image.set_shape([crop_height, crop_width, 3])
 
